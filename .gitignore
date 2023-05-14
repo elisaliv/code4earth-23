@@ -164,8 +164,8 @@ cython_debug/
 *.grib
 *.zip
 *.dbf
-*.sph
+*.shp
 *.png
 *.jpg
-*.prg
+*.prj
 *.shx
