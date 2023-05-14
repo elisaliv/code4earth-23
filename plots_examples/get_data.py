@@ -20,11 +20,7 @@ c.retrieve(
             'total_column_sulphur_dioxide', 'total_column_water_vapour',
         ],
         'date': '2021-01-01/2021-01-31',
-        'time': [
-            '00:00', '03:00', '06:00',
-            '09:00', '12:00', '15:00',
-            '18:00', '21:00',
-        ],
+        'time': '00:00',
         'area': [
             47, 7, 36,
             18,
@@ -32,5 +28,5 @@ c.retrieve(
     },
     f'{data_dir}/italiaecmwf.nc')
 
-shapefile_url = "https://www.eea.europa.eu/data-and-maps/data/eea-reference-grids-2/gis-files/italy-shapefile/at_download/file"
-subprocess.run(f"wget {shapefile_url} -O {data_dir}/italy_shapefile.zip && unzip {data_dir}/italy_shapefile.zip -d {data_dir}/italy_shapefile && rm {data_dir}/italy_shapefile.zip", shell=True, check=True)
+# shapefile_url = "https://www.eea.europa.eu/data-and-maps/data/eea-reference-grids-2/gis-files/italy-shapefile/at_download/file"
+# subprocess.run(f"wget {shapefile_url} -O {data_dir}/italy_shapefile.zip && unzip {data_dir}/italy_shapefile.zip -d {data_dir}/italy_shapefile && rm {data_dir}/italy_shapefile.zip", shell=True, check=True)
