@@ -1,7 +1,9 @@
 import cdsapi
-import subprocess
+import zipfile
+import requests
 import os
 import sys
+import glob
 
 data_dir = os.path.dirname(sys.argv[0])
 
@@ -28,5 +30,22 @@ c.retrieve(
     },
     f'{data_dir}/italiaecmwf.nc')
 
-# shapefile_url = "https://www.eea.europa.eu/data-and-maps/data/eea-reference-grids-2/gis-files/italy-shapefile/at_download/file"
-# subprocess.run(f"wget {shapefile_url} -O {data_dir}/italy_shapefile.zip && unzip {data_dir}/italy_shapefile.zip -d {data_dir}/italy_shapefile && rm {data_dir}/italy_shapefile.zip", shell=True, check=True)
+# Download shapefile zip from naturalearthdata
+shapefile_url = "https://www.naturalearthdata.com/http//www.naturalearthdata.com/download/10m/cultural/ne_10m_admin_0_countries_ita.zip"
+headers = requests.utils.default_headers()
+headers.update({
+    'User-Agent': 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:52.0) Gecko/20100101 Firefox/52.0',
+})
+r = requests.get(shapefile_url, headers=headers)
+# Save downloaded data to zip file
+with open(f"{data_dir}/italy_shapefile.zip", "wb") as f:
+    f.write(r.content)
+# Unzip file to directory
+with zipfile.ZipFile(f"{data_dir}/italy_shapefile.zip", 'r') as zip_ref:
+    zip_ref.extractall(f"{data_dir}/italy_shapefile")
+# Remove zip file
+os.remove(f"{data_dir}/italy_shapefile.zip")
+# Rename all files inside zip
+for file in glob.glob(f"{data_dir}/italy_shapefile/*"):
+    ext = file.split('.')[-1]
+    os.rename(file, f'{data_dir}/italy_shapefile/italy_shapefile.{ext}')
